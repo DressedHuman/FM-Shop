@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import SideBar from './components/SideBar/SideBar';
 
 function App() {
   return (
-    <>
-      <h2 className='text-3xl font-semibold text-black text-center my-7'>Bismillahir Rahmanir Rahim</h2>
-    </>
+    <div
+      className='grid grid-cols-2 min-h-[100vh]'
+    >
+      <div>
+
+      </div>
+      <SideBar />
+    </div>
   )
 }
 
