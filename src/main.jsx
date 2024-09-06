@@ -6,6 +6,7 @@ import Root from './components/Root/Root'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import SignUp from './components/SignUp/SignUp'
 
 
 const routes = createBrowserRouter([
@@ -20,6 +21,10 @@ const routes = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/signup',
+        element: <SignUp />,
       }
     ]
   }

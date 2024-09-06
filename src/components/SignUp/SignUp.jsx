@@ -1,12 +1,14 @@
-import SideBar from "../SideBar/SideBar";
 import { useState } from "react";
+import SideBar from "../SideBar/SideBar";
 import Hide from '../../assets/hide.svg';
 import Show from '../../assets/show.svg';
 import { Link } from "react-router-dom";
 import Checkbox from "../FormComponents/Checkboxes/Checkbox";
 
-const Login = () => {
+const SignUp = () => {
     const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isAcceptedTOP, setIsAcceptedTOP] = useState(false);
@@ -19,29 +21,64 @@ const Login = () => {
     }
 
 
-    const handleSignIn = (e) => {
+    const handleSignUp = (e) => {
         e.preventDefault();
-        const signInInfo = {
+        const signUpInfo = {
+            firstName,
+            lastName,
             email,
             password,
         }
-        console.log(signInInfo);
+        console.log(signUpInfo);
     }
 
 
     return (
         <div className="grid grid-cols-2 min-h-[100vh]">
-            <div className="px-24 py-32">
+            <div className="px-24 py-24">
                 <div>
-                    <p className="text-black text-[32px] font-medium font-barlow">Welcome Back!</p>
-                    <p className="text-[#707070] font-medium font-barlow">Enter your Credentials to access your account</p>
+                    <div className="flex flex-col justify-center items-center gap-0">
+                        <p className="text-black text-2xl font-semibold font-barlow">Welcome to</p>
+                        <h2 className='text-black text-[40px] font-bold font-inter'>Furni<span className='text-[#1E99F5]'>Flex</span></h2>
+                        <p className="font-barlow text-[#707070] font-medium">Signup for purchase your desire products</p>
+                    </div>
 
                     <form
-                        onSubmit={handleSignIn}
+                        onSubmit={handleSignUp}
                         className="mt-7 space-y-8"
                     >
                         {/* input fields here */}
                         <div>
+                            {/* name fields here */}
+                            <div className="grid grid-cols-2 gap-2">
+                                {/* first name field */}
+                                <div className="pt-[2px] pb-[5px] rounded-lg">
+                                    <p>First Name (optional)</p>
+                                    <input
+                                        type="text"
+                                        name="first_name"
+                                        id="first_name"
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                        placeholder="Enter your first name"
+                                        className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
+                                        autoFocus
+                                    />
+                                </div>
+
+                                {/* last name field */}
+                                <div className="pt-[2px] pb-[5px] rounded-lg">
+                                    <p>Last Name</p>
+                                    <input
+                                        type="text"
+                                        name="last_name"
+                                        id="last_name"
+                                        onChange={(e) => setLastName(e.target.value)}
+                                        placeholder="Enter your last name"
+                                        className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
+                                    />
+                                </div>
+                            </div>
+
                             {/* email address field */}
                             <div className="pt-[2px] pb-[5px] rounded-lg">
                                 <p>Email address</p>
@@ -52,7 +89,6 @@ const Login = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter your email"
                                     className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
-                                    autoFocus
                                 />
                             </div>
 
@@ -86,17 +122,17 @@ const Login = () => {
                             <p className="text-black text-sm font-medium font-barlow">I agree to the <span className="underline">Terms & Policy</span></p>
                         </div>
 
-                        {/* sign in button */}
+                        {/* sign up button */}
                         <button
                             type="submit"
                             className={`w-full p-2 ${isAcceptedTOP ? "bg-black" : "bg-[gray]"} rounded-lg text-white font-barlow font-semibold text-[17px]`}
                             disabled={!isAcceptedTOP}
-                        >Sign In</button>
+                        >Sign Up</button>
                     </form>
 
                     <p className="text-center text-black font-barlow font-medium my-2">or</p>
 
-                    <p className="text-center text-sm text-black font-medium font-barlow">Don&apos;t have an account? <Link to={'/signup'} className="text-[blue]">Sign Up</Link></p>
+                    <p className="text-center text-sm text-black font-medium font-barlow">Already have an account? <Link to={'/login'} className="text-[blue]">Sign In</Link></p>
                 </div>
             </div>
             <SideBar />
@@ -104,4 +140,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
