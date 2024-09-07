@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 
 from user.models import CustomUser
 from user.serializers import CustomUserSerializer
+from products import all_products
 
 
 
@@ -44,3 +45,10 @@ def login(req):
 @api_view(["GET"])
 def test_token(req):
     return Response({"detail": "passed"}, status=status.HTTP_200_OK)
+
+
+
+# all products api
+@api_view(["GET"])
+def get_products(req):
+    return Response(all_products, status=status.HTTP_200_OK)
