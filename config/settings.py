@@ -127,7 +127,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.CustomUser'
 
 
-# Cors headers properties
+# rest framework configs
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
+# Cors headers configs
 CORS_ORIGIN_WHITELIST = [
     'https://ibos-shop.surge.sh',
     'http://localhost:5173',
