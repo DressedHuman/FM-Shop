@@ -1,15 +1,21 @@
 import SideBar from "../SideBar/SideBar";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Hide from '../../assets/hide.svg';
 import Show from '../../assets/show.svg';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Checkbox from "../FormComponents/Checkboxes/Checkbox";
+import { api } from "../../apis";
+import { AuthContext } from "../Contexts";
 
 const Login = () => {
+    const { isAuthorized, setIsAuthorized, isLoading, setIsLoading, setFirstName, setLastName, setEmail } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [isPasswordHidden, setIsPasswordHidden] = useState(true);
-    const [email, setEmail] = useState("");
+    const [email, setEmailField] = useState("");
     const [password, setPassword] = useState("");
     const [isAcceptedTOP, setIsAcceptedTOP] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
 
     const handlePasswordHiding = (e) => {
@@ -18,12 +24,39 @@ const Login = () => {
         setIsPasswordHidden(!isPasswordHidden);
     }
 
-
-    const handleSignIn = (e) => {
+    useEffect(() => {
+        if (isAuthorized) {
+            navigate("/");
+        }
+    })
+    const handleSignIn = async (e) => {
         e.preventDefault();
         const signInInfo = {
             email,
             password,
+        }
+        // setting the loader
+        setIsLoading(true);
+        setErrorMessage("");
+
+        try {
+            const res = await api.post("api/user/login/", signInInfo);
+            if (res.status == 200) {
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
+
+                setFirstName(res.data.user.first_name);
+                setLastName(res.data.user.last_name);
+                setEmail(res.data.user.email);
+
+                setIsLoading(false);
+                setIsAuthorized(true);
+            }
+        }
+        catch (err) {
+            setErrorMessage("Wrong Credentials Given");
+            setIsLoading(false);
+            console.error(err);
         }
         console.log(signInInfo);
     }
@@ -38,10 +71,10 @@ const Login = () => {
 
                     <form
                         onSubmit={handleSignIn}
-                        className="mt-7 space-y-8"
+                        className="mt-7 space-y-7"
                     >
                         {/* input fields here */}
-                        <div>
+                        <div className="flex flex-col gap-[5px]">
                             {/* email address field */}
                             <div className="pt-[2px] pb-[5px] rounded-lg">
                                 <p>Email address</p>
@@ -49,10 +82,11 @@ const Login = () => {
                                     type="email"
                                     name="email"
                                     id="email"
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => setEmailField(e.target.value)}
                                     placeholder="Enter your email"
                                     className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
                                     autoFocus
+                                    required
                                 />
                             </div>
 
@@ -67,6 +101,7 @@ const Login = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="Enter your password"
                                         className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
+                                        required
                                     />
                                     <button
                                         onClick={handlePasswordHiding}
@@ -76,22 +111,30 @@ const Login = () => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* terms and policy accepting checkbox */}
-                        <div className="flex gap-2">
-                            <div className="my-auto">
-                                <Checkbox onChange={() => setIsAcceptedTOP(!isAcceptedTOP)} showCross={false} size="small" />
+                            {/* terms and policy accepting checkbox */}
+                            <div className="flex gap-2">
+                                <div className="my-auto">
+                                    <Checkbox onChange={() => setIsAcceptedTOP(!isAcceptedTOP)} showCross={false} size="small" />
+                                </div>
+                                <p className="text-black text-sm font-medium font-barlow">I agree to the <span className="underline">Terms & Policy</span></p>
                             </div>
-                            <p className="text-black text-sm font-medium font-barlow">I agree to the <span className="underline">Terms & Policy</span></p>
                         </div>
 
-                        {/* sign in button */}
-                        <button
-                            type="submit"
-                            className={`w-full p-2 ${isAcceptedTOP ? "bg-black" : "bg-[gray]"} rounded-lg text-white font-barlow font-semibold text-[17px]`}
-                            disabled={!isAcceptedTOP}
-                        >Sign In</button>
+
+                        <div>
+                            {/* error message here */}
+                            {
+                                errorMessage && <p className="text-red-700 font-mono text-sm text-center mb-1">{errorMessage}</p>
+                            }
+
+                            {/* sign in button */}
+                            <button
+                                type="submit"
+                                className={`w-full p-2 ${isAcceptedTOP ? "bg-black" : "bg-[gray]"} rounded-lg text-white font-barlow font-semibold text-[17px]`}
+                                disabled={!isAcceptedTOP}
+                            >Sign In</button>
+                        </div>
                     </form>
 
                     <p className="text-center text-black font-barlow font-medium my-2">or</p>

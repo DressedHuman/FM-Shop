@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Contexts';
 
 const ProtectedRoute = ({children}) => {
+    const {isAuthorized} = useContext(AuthContext);
     const navigate = useNavigate();
     
     useEffect(() => {
-        navigate('/login');
+        if(!isAuthorized){
+            navigate('/login');
+        }
     }, [])
     
     return children;

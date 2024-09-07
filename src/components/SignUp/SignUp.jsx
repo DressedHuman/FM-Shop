@@ -35,7 +35,7 @@ const SignUp = () => {
 
     return (
         <div className="grid grid-cols-2 min-h-[100vh]">
-            <div className="px-24 py-24">
+            <div className="px-24 py-20">
                 <div>
                     <div className="flex flex-col justify-center items-center gap-0">
                         <p className="text-black text-2xl font-semibold font-barlow">Welcome to</p>
@@ -45,15 +45,15 @@ const SignUp = () => {
 
                     <form
                         onSubmit={handleSignUp}
-                        className="mt-7 space-y-8"
+                        className="mt-7 space-y-7"
                     >
                         {/* input fields here */}
-                        <div>
+                        <div className="flex flex-col gap-[5px]">
                             {/* name fields here */}
                             <div className="grid grid-cols-2 gap-2">
                                 {/* first name field */}
                                 <div className="pt-[2px] pb-[5px] rounded-lg">
-                                    <p>First Name (optional)</p>
+                                    <p>First Name <span className="text-gray-500">(<span className="text-amber-600">optional</span>)</span></p>
                                     <input
                                         type="text"
                                         name="first_name"
@@ -67,7 +67,7 @@ const SignUp = () => {
 
                                 {/* last name field */}
                                 <div className="pt-[2px] pb-[5px] rounded-lg">
-                                    <p>Last Name</p>
+                                    <p>Last Name <span className="text-gray-500">(<span className="text-amber-600">optional</span>)</span></p>
                                     <input
                                         type="text"
                                         name="last_name"
@@ -89,6 +89,7 @@ const SignUp = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter your email"
                                     className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
+                                    required
                                 />
                             </div>
 
@@ -103,6 +104,7 @@ const SignUp = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="Enter your password"
                                         className="w-full p-2 outline-none border focus:border-2 border-gray-500 focus:border-gray-700 mt-1 rounded-lg"
+                                        required
                                     />
                                     <button
                                         onClick={handlePasswordHiding}
@@ -112,14 +114,14 @@ const SignUp = () => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* terms and policy accepting checkbox */}
-                        <div className="flex gap-2">
-                            <div className="my-auto">
-                                <Checkbox onChange={() => setIsAcceptedTOP(!isAcceptedTOP)} showCross={false} size="small" />
+                            {/* terms and policy accepting checkbox */}
+                            <div className="flex gap-2">
+                                <div className="my-auto">
+                                    <Checkbox onChange={() => setIsAcceptedTOP(!isAcceptedTOP)} showCross={false} size="small" />
+                                </div>
+                                <p className="text-black text-sm font-medium font-barlow">I agree to the <span className="underline">Terms & Policy</span></p>
                             </div>
-                            <p className="text-black text-sm font-medium font-barlow">I agree to the <span className="underline">Terms & Policy</span></p>
                         </div>
 
                         {/* sign up button */}

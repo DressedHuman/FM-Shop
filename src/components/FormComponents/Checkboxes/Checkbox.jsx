@@ -16,7 +16,7 @@ const Checkbox = ({ defaultChecked = false, onChange, size = 'medium', showCross
     return (
         <div
             onClick={handleClick}
-            className={`aspect-square select-none ${disabled ? '' : 'hover:scale-150'} duration-75
+            className={`aspect-square select-none cursor-pointer ${disabled ? '' : 'hover:scale-150'} duration-75
                 ${size === 'small' ? 'w-4 border-[1.5px] p-[1px] rounded' :
                     size === 'medium' ? 'w-5 border-[2px] p-[2px] rounded-md' :
                         size === 'large' ? 'w-7 border-[2px] p-[1px] rounded-md' : 'w-5 border-[2px] p-[2px] rounded-md'}
