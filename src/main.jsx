@@ -7,16 +7,19 @@ import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import SignUp from './components/SignUp/SignUp'
+import ErrorPage from './components/ErrorPage/ErrorPage'
 
 
 const routes = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
         element: <ProtectedRoute><Home /></ProtectedRoute>,
+        errorElement: <ErrorPage />,
       },
       {
         path: '/login',

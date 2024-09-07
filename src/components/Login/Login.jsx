@@ -29,6 +29,8 @@ const Login = () => {
             navigate("/");
         }
     })
+
+    // signin function
     const handleSignIn = async (e) => {
         e.preventDefault();
         const signInInfo = {
@@ -58,7 +60,6 @@ const Login = () => {
             setIsLoading(false);
             console.error(err);
         }
-        console.log(signInInfo);
     }
 
 
@@ -125,7 +126,7 @@ const Login = () => {
                         <div>
                             {/* error message here */}
                             {
-                                errorMessage && <p className="text-red-700 font-mono text-sm text-center mb-1">{errorMessage}</p>
+                                errorMessage && <p className="text-red-700 font-mono text-center mb-1">{errorMessage}</p>
                             }
 
                             {/* sign in button */}

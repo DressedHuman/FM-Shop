@@ -3,13 +3,22 @@ import Loader from "./Loader/Loader";
 import { test_token } from "../apis";
 
 export const AuthContext = createContext(null);
+export const CartContext = createContext(null);
 
 const Contexts = ({ children }) => {
+    // AuthContext states
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+
+    // CartContext states
+    const [cart, setCart] = useState({
+        totalProducts: 0,
+        products: [],
+        totalPrice: 0,
+    });
 
     const authContextValue = {
         isAuthorized,
@@ -22,6 +31,11 @@ const Contexts = ({ children }) => {
         setLastName,
         email,
         setEmail,
+    }
+
+    const cartContextValue = {
+        cart,
+        setCart,
     }
 
     // effect the auth function to check if the user is authorized or not
@@ -64,14 +78,16 @@ const Contexts = ({ children }) => {
 
     // return loader if it's loading, otherwise children
     return <AuthContext.Provider value={authContextValue}>
-        <div className="relative">
-            {
-                isLoading && <div className="absolute top-0 bottom-0 left-0 right-0 z-[9999]">
-                    <Loader />
-                </div>
-            }
-            {children}
-        </div>
+        <CartContext.Provider value={cartContextValue}>
+            <div className="relative">
+                {
+                    isLoading && <div className="absolute top-0 bottom-0 left-0 right-0 z-[9999]">
+                        <Loader />
+                    </div>
+                }
+                {children}
+            </div>
+        </CartContext.Provider>
     </AuthContext.Provider>
 };
 

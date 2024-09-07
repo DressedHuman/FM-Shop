@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import Hide from '../../assets/hide.svg';
 import Show from '../../assets/show.svg';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Checkbox from "../FormComponents/Checkboxes/Checkbox";
+import { AuthContext } from "../Contexts";
+import { api } from "../../apis";
 
 const SignUp = () => {
+    const { isAuthorized, isLoading, setIsLoading } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [isPasswordHidden, setIsPasswordHidden] = useState(true);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isAcceptedTOP, setIsAcceptedTOP] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
 
+
+    // redirect to the homepage if already authorized
+    useEffect(() => {
+        if (isAuthorized) {
+            navigate("/");
+        }
+    })
 
     const handlePasswordHiding = (e) => {
         e.preventDefault();
@@ -21,7 +33,7 @@ const SignUp = () => {
     }
 
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
         const signUpInfo = {
             firstName,
@@ -29,7 +41,27 @@ const SignUp = () => {
             email,
             password,
         }
-        console.log(signUpInfo);
+
+        setIsLoading(true);
+        setErrorMessage("");
+
+        try {
+            const res = await api.post("api/user/signup/", signUpInfo);
+            if (res.status == 201) {
+                setIsLoading(false);
+                navigate("/login");
+            }
+            else {
+                setErrorMessage("Error occurred");
+                setIsLoading(false);
+            }
+        }
+        catch (err) {
+            setErrorMessage("Error occurred");
+            setIsLoading(false);
+            console.error(err);
+        }
+
     }
 
 
@@ -124,12 +156,20 @@ const SignUp = () => {
                             </div>
                         </div>
 
-                        {/* sign up button */}
-                        <button
-                            type="submit"
-                            className={`w-full p-2 ${isAcceptedTOP ? "bg-black" : "bg-[gray]"} rounded-lg text-white font-barlow font-semibold text-[17px]`}
-                            disabled={!isAcceptedTOP}
-                        >Sign Up</button>
+                        <div>
+                            {/* error message here */}
+                            {
+                                errorMessage && <p className="text-[red] font-mono text-center mb-1">{errorMessage}</p>
+                            }
+
+
+                            {/* sign up button */}
+                            <button
+                                type="submit"
+                                className={`w-full p-2 ${isAcceptedTOP ? "bg-black" : "bg-[gray]"} rounded-lg text-white font-barlow font-semibold text-[17px]`}
+                                disabled={!isAcceptedTOP}
+                            >Sign Up</button>
+                        </div>
                     </form>
 
                     <p className="text-center text-black font-barlow font-medium my-2">or</p>
