@@ -7,6 +7,7 @@ import Login from './components/Login/Login'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import SignUp from './components/SignUp/SignUp'
 import ErrorPage from './components/ErrorPage/ErrorPage'
+import Cart from './components/Cart/Cart'
 
 
 const routes = createBrowserRouter([
@@ -27,6 +28,10 @@ const routes = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />
       }
     ]
   }
