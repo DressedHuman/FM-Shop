@@ -63,7 +63,7 @@ const Home = () => {
     return (
         <div className="px-24 pt-7">
             <Header />
-            <div className="grid grid-cols-4 gap-12 pt-20">
+            <div className="grid grid-cols-4 gap-12 py-20">
                 <div className="min-h-max flex flex-col justify-start items-center gap-2">
                     {
                         categories.map((category, idx) => <button
