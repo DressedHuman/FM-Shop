@@ -1,4 +1,3 @@
-import axios from "axios";
 import Header from "../Header/Header";
 import { useContext, useEffect, useState } from "react";
 import Card from "../Card/Card";
@@ -61,9 +60,9 @@ const Home = () => {
     }
 
     return (
-        <div className="px-24 pt-7">
+        <div className="px-7 md:px-12 lg:px-24 pt-2 md:pt-5 lg:pt-7">
             <Header />
-            <div className="grid grid-cols-4 gap-12 py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 py-10 md:py-20">
                 <div className="min-h-max flex flex-col justify-start items-center gap-2">
                     {
                         categories.map((category, idx) => <button
@@ -75,7 +74,7 @@ const Home = () => {
                         </button>)
                     }
                 </div>
-                <div className="col-span-3 grid grid-cols-3 gap-7">
+                <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
                     {
                         showingProducts.map(product => <Card
                             key={product.id}
