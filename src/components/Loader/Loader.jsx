@@ -2,7 +2,7 @@ import "./Loader.css";
 
 const Loader = () => {
     return (
-        <div className={'preloader bg-[#264653]'}>
+        <div className={'preloader bg-black'}>
             <div className={'preloader-inner'}>
                 <div className={'preloader-icon'}>
                     <span></span>

@@ -19,8 +19,8 @@
 }
 
 .preloader-icon {
-    width: 72px;
-    height: 72px;
+    width: 210px;
+    height: 210px;
     display: inline-block;
     padding: 0;
 }
@@ -28,10 +28,10 @@
 .preloader-icon span {
     position: absolute;
     display: inline-block;
-    width: 72px;
-    height: 72px;
+    width: 210px;
+    height: 210px;
     border-radius: 100%;
-    background: #cfc5bf;
+    background: #FFFFFF;
     -webkit-animation: preloader-fx 1.6s linear infinite;
     animation: preloader-fx 1.6s linear infinite;
 }

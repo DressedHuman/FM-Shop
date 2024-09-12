@@ -3,13 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import Card from "../Card/Card";
 import { CartContext } from "../Contexts";
 import { api } from "../../apis";
+import FilterSection from "./FilterSection";
 
 const Home = () => {
     const { cart, setCart } = useContext(CartContext);
     const [products, setProducts] = useState([]);
     const [showingProducts, setShowingProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
 
     // fetching the products
     useEffect(() => {
@@ -32,7 +32,10 @@ const Home = () => {
 
     // sort products by category
     const sort = (category) => {
-        setSelectedCategory(category);
+        if (category === "all") {
+            return setShowingProducts(products);
+        }
+
         const _products = products.filter(product => product.category === category);
         setShowingProducts(_products);
     }
@@ -63,17 +66,10 @@ const Home = () => {
         <div className="px-7 md:px-12 lg:px-24 pt-2 md:pt-5 lg:pt-7">
             <Header />
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 py-10 md:py-20">
-                <div className="min-h-max flex flex-col justify-start items-center gap-2">
-                    {
-                        categories.map((category, idx) => <button
-                            onClick={() => sort(category)}
-                            key={idx}
-                            className={`w-full text-start ${selectedCategory === category ? "bg-black text-white" : "bg-white text-[#717171]"} font-semibold text-[22px] rounded-lg px-4 py-2`}
-                        >
-                            {category}
-                        </button>)
-                    }
-                </div>
+                {/* filter section */}
+                <FilterSection categories={categories} sort={sort} />
+
+                {/* products section */}
                 <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
                     {
                         showingProducts.map(product => <Card

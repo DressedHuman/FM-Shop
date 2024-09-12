@@ -65,6 +65,8 @@ const Cart = () => {
                         </div>)
                     }
                 </div>
+
+                {/* Summary section */}
                 <div>
                     <h2 className="text-[#1E1E1E] text-[28px] font-semibold font-barlow space-y-7">Order details</h2>
                     <div className="px-7 pt-12 space-y-7">
@@ -84,7 +86,7 @@ const Cart = () => {
                         </div>
                         <div className="flex justify-between items-center gap-7">
                             <p className="text-[#656565] text-[24px] font-semibold font-barlow">Total</p>
-                            <p className="text-[#0E0E0E] text-[24px] font-semibold font-barlow">{cart.totalPrice}</p>
+                            <p className="text-[#0E0E0E] text-[24px] font-semibold font-barlow">${cart.totalPrice.toFixed(2)}</p>
                         </div>
                     </div>
                     <button
