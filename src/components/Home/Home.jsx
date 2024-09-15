@@ -65,7 +65,7 @@ const Home = () => {
     return (
         <div className="px-7 md:px-12 lg:px-24 pt-2 md:pt-5 lg:pt-7">
             <Header />
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 py-10 md:py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 py-5 md:py-5">
                 {/* filter section */}
                 <FilterSection categories={categories} sort={sort} />
 

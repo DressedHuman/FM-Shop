@@ -24,7 +24,7 @@ const Card = ({ productInfo, addToCart, removeFromCart }) => {
     }, [])
 
     return (
-        <div className='p-3 flex flex-col rounded-lg shadow-lg'>
+        <div className='p-3 flex flex-col rounded-lg shadow-lg hover:scale-105 duration-150'>
             <img className='w-full aspect-square object-contain' src={productInfo.image} alt={productInfo.title} />
             <h2 className='text-lg text-[#343434] font-barlow font-semibold mt-4 mb-1'>{productInfo.title.length > 42 ? productInfo.title.slice(0, 42) : productInfo.title}</h2>
             <h2 className='text-lg text-[#343434] font-barlow font-bold'>${productInfo.price}</h2>
@@ -54,6 +54,8 @@ const Card = ({ productInfo, addToCart, removeFromCart }) => {
 
 Card.propTypes = {
     productInfo: PropTypes.object,
+    addToCart: PropTypes.func,
+    removeFromCart: PropTypes.func,
 }
 
 export default Card;
